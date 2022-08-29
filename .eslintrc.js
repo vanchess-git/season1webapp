@@ -10,7 +10,6 @@ module.exports = {
     'google',
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:prettier/recommended',
   ],
   'globals': {
     'Atomics': 'readonly',
@@ -28,7 +27,6 @@ module.exports = {
   'plugins': [
     'react',
     'react-native',
-    'prettier'
   ],
   'rules': {
     'react/jsx-uses-react': 'error',

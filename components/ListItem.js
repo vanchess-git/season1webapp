@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import PropTypes from 'prop-types';
 
 const ListItem = (props) => {
@@ -30,15 +30,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    padding: 10,
+    // padding: 10,
     width: 150,
-    height: 150
+    height: 150,
+    borderBottomLeftRadius: 75,
   },
   touchOpa: {
-    marginTop: 5,
-    backgroundColor: '#00ff26',
+    marginTop: 3,
+    marginBottom: 3,
+    backgroundColor: '#303060',
     flexDirection: 'row',
-    padding: 10
+    // padding: 10,
+    borderBottomLeftRadius: 75,
   },
   textBox: {
     flexWrap: 'nowrap',
@@ -47,11 +50,13 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     textAlign: 'justify',
-    color: '#ff8c00'
+    color: '#ff8c00',
+    fontSize: 30,
   },
   textMain: {
     flexWrap: 'wrap',
-    color: '#ffff00'
+    color: '#ffffff',
+    fontSize: 20,
   }
 });
 

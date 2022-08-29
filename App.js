@@ -1,5 +1,4 @@
-import {Platform, SafeAreaView, StyleSheet} from 'react-native';
-import {StatusBar} from 'expo-status-bar';
+import {Platform, SafeAreaView, StyleSheet, StatusBar, View, ImageBackground, Text} from 'react-native';
 import List from "./components/List";
 
 
@@ -7,18 +6,61 @@ const App = () => {
   return (
     <>
       <SafeAreaView style={styles.droidSafeArea}>
-        <List/>
+        <View style={styles.topView}>
+          <ImageBackground
+            source={{uri: 'http://www.placekitten.com/1200/300'}}
+            style={styles.topImage}>
+            <View style={styles.topImageTextHolder}>
+              <Text style={styles.topText}>#LostKitteh</Text>
+            </View>
+          </ImageBackground>
+        </View>
+        <View style={styles.listView}>
+          <List/>
+        </View>
       </SafeAreaView>
-      <StatusBar style="auto"/>
+      <StatusBar style='auto'/>
     </>
   );
 };
 const styles = StyleSheet.create({
   droidSafeArea: {
     flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: Platform.OS === 'android' ? 31 : 0
-  }
+    flexDirection: 'column',
+    backgroundColor: '#303040',
+    // paddingTop: Platform.OS === 'android' ? 31 : 0
+  },
+  topView: {
+    flex: 1,
+    paddingBottom: 3,
+  },
+  topImage: {
+    flexDirection: 'column',
+    height: '100%',
+    width: '100%',
+    overflow: 'hidden',
+    // opacity: 0.1,
+    borderBottomEndRadius: 100,
+    position: 'relative',
+  },
+  topImageTextHolder: {
+    position: "absolute",
+    top: '40%',
+    left: '40%',
+  },
+  topText: {
+    color: 'white',
+    opacity: 0.5,
+    fontSize: 60,
+    // left: 20,
+    // bottom: 60,
+    position: 'absolute',
+    alignSelf: 'center',
+    margin: 'auto',
+  },
+  listView: {
+    flex: 2,
+  },
 });
 
 export default App;
