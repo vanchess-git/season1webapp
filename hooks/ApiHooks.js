@@ -1,5 +1,4 @@
-import {fetch} from "react-native/Libraries/Network/fetch";
-import {useEffect, useState} from "react";
+import {useEffect, useState} from 'react';
 
 const apiUrl = 'http://media.mw.metropolia.fi/wbma/';
 
@@ -13,27 +12,21 @@ const useMedia = () => {
       const allMediaData = json.map(async (mediaItem) => {
         const response = await fetch(apiUrl + 'media/' + mediaItem.file_id);
         return await response.json();
-
       });
       setMediaArray(await Promise.all(allMediaData));
-
     } catch (error) {
       console.log('media fetch failed', error);
-      // TODO kerrohan käyttäjälle jotain
-
+      // TODO: notify user?
     }
-  }
-
+  };
   useEffect(() => {
     loadMedia();
-
   }, []);
-
   return {mediaArray};
 };
 
 const useUser = () => {
-  //TODO jotain jotain
+  // TODO: later
 };
 
 export {useMedia, useUser};
