@@ -1,9 +1,9 @@
-import {MainContext} from "../contexts/MainContext";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useContext} from 'react';
-import {useLogin, useUser} from "../hooks/ApiHooks";
-import {Controller, useForm} from "react-hook-form";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {Button, Text, TextInput, View} from "react-native";
+import {Controller, useForm} from 'react-hook-form';
+import {View, Text, Button, TextInput} from 'react-native';
+import {MainContext} from '../contexts/MainContext';
+import {useLogin, useUser} from '../hooks/ApiHooks';
 
 const RegisterForm = () => {
   const {isLoggedIn, setIsLoggedIn} = useContext(MainContext);
@@ -18,26 +18,24 @@ const RegisterForm = () => {
   });
 
   const register = async (userData) => {
+    console.log('register userData', userData);
     try {
       const result = await postUser(userData);
-      console.log('registration result', result)
-      console.log('register userData', userData);
-      // const userData = await postLogin(loginCredentials);
-      // await AsyncStorage.setItem('userToken', userData.token);
-      // setIsLoggedIn(true);
+      console.log('registration result', result);
+      // AUTOLOGIN? (postLogin -> save token -> setloggedin to true)
     } catch (error) {
-      console.error('register - register', error);
+      console.error('RegisterForm error', error);
       // TODO: nofify user about wrong username/password/net error?
     }
   };
 
   return (
     <View>
-      <Text>register Form</Text>
+      <Text>Registeration Form</Text>
       <Controller
         control={control}
         rules={{
-          required: false,
+          required: true,
           minLength: 3,
         }}
         render={({field: {onChange, onBlur, value}}) => (
@@ -45,10 +43,10 @@ const RegisterForm = () => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder="Full name"
+            placeholder="Username"
           />
         )}
-        name="full_name"
+        name="username"
       />
       {errors.username?.type === 'required' && <Text>This is required.</Text>}
       {errors.username?.type === 'minLength' && <Text>Min 3 chars!</Text>}
@@ -57,7 +55,6 @@ const RegisterForm = () => {
         control={control}
         rules={{
           required: true,
-          email: true,
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
@@ -69,10 +66,7 @@ const RegisterForm = () => {
         )}
         name="email"
       />
-
-      {errors.email?.type === 'required' && <Text>This is required.</Text>}
-      {errors.email?.type === 'email' && <Text>Min 3 chars!</Text>}
-
+      {errors.email && <Text>This is required.</Text>}
 
       <Controller
         control={control}
@@ -92,12 +86,26 @@ const RegisterForm = () => {
       />
       {errors.password && <Text>This is required.</Text>}
 
-      <Button title="Register!" onPress={handleSubmit((data) => register(data))} />
+      <Controller
+        control={control}
+        rules={{
+          required: false,
+          minLength: 3,
+        }}
+        render={({field: {onChange, onBlur, value}}) => (
+          <TextInput
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="Full name"
+          />
+        )}
+        name="full_name"
+      />
+
+      <Button title="Register!" onPress={handleSubmit(register)} />
     </View>
   );
-}
+};
 
-
-
-
-export default RegisterForm
+export default RegisterForm;

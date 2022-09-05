@@ -1,6 +1,6 @@
 import {StyleSheet, SafeAreaView, Text, Image} from 'react-native';
 import PropTypes from 'prop-types';
-import {mediaUrl} from "../utils/Variables";
+import {mediaUrl} from '../utils/variables';
 
 const Single = ({route}) => {
   console.log('Single route', route);

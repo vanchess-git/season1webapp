@@ -1,6 +1,6 @@
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
-import {mediaUrl} from "../utils/Variables";
+import {mediaUrl} from "../utils/variables";
 
 
 const ListItem = ({singleMedia, navigation}) => {

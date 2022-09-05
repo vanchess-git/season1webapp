@@ -1,5 +1,3 @@
-import {fetch} from "react-native/Libraries/Network/fetch";
-
 const doFetch = async (url, options = {}) => {
   try {
     const response = await fetch(url, options);
@@ -8,10 +6,11 @@ const doFetch = async (url, options = {}) => {
       return data;
     } else {
       // http status code 4xx or 5xx
-      throw new error(data.message)
+      // message comes from server
+      throw new Error(data.message);
     }
   } catch (error) {
-      throw new error(error.message)
+    throw new Error(error.message);
   }
 };
 
