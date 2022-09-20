@@ -1,13 +1,13 @@
 import {useEffect, useState} from 'react';
 import {doFetch} from '../utils/http';
-import {apiUrl} from '../utils/variables';
+import {apiUrl, applicationTag} from '../utils/variables';
 
 const useMedia = (update) => {
   const [mediaArray, setMediaArray] = useState([]);
   const loadMedia = async () => {
     try {
-      const json = await doFetch(apiUrl + 'media?limit=10');
-      console.log(json);
+      const json = await useTag().getFilesByTag(applicationTag);
+      // console.log(json);
       const allMediaData = json.map(async (mediaItem) => {
         return await doFetch(apiUrl + 'media/' + mediaItem.file_id);
       });
@@ -26,13 +26,13 @@ const useMedia = (update) => {
       method: 'POST',
       headers: {'x-access-token': token},
       body: data,
-    }
+    };
     try {
       return await doFetch(apiUrl + 'media', options);
     } catch (error) {
       throw new Error(error.message);
     }
-  }
+  };
 
   return {mediaArray, postMedia};
 };
@@ -104,7 +104,7 @@ const useTag = () => {
     return await doFetch(apiUrl + 'tags/' + tag);
   };
 
-  const postTag = async (tag) => {
+  const postTag = async (token, tag) => {
     const options = {
       method: 'POST',
       headers: {
