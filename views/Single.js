@@ -7,17 +7,28 @@ import FullSizeImage from '../components/FullSizeImage';
 
 const Single = ({route}) => {
   console.log('Single route', route);
-  const {filename, title, description, user_id} = route.params;
+  const {filename, title, description, user_id, media_type} = route.params;
   return (
     <ScrollView>
       <Card>
         <Card.Title>{title}</Card.Title>
         <Card.Divider />
-        <FullSizeImage
-          source={{uri: mediaUrl + filename}}
-          PlaceholderContent={<ActivityIndicator />}
-          style={{marginBottom: 12}}
-        />
+        {media_type === 'image' ? (
+          <FullSizeImage
+            source={{uri: mediaUrl + filename}}
+            PlaceholderContent={<ActivityIndicator />}
+            style={{marginBottom: 12}}
+          />
+        ) : (
+          <video
+            source={{uri: mediaUrl + filename}}
+            style={{width: '100%', height: '100%'}}
+            onError={(error) => {
+              console.log('videoerror:', error)
+            }}
+            useNativeControls
+          />
+        )}
         <Card.Divider />
         <ListItem>
           <Text>{description}</Text>
