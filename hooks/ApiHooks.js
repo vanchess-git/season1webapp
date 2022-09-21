@@ -1,13 +1,19 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
+import {MainContext} from '../contexts/MainContext';
 import {doFetch} from '../utils/http';
 import {apiUrl, applicationTag} from '../utils/variables';
 
-const useMedia = (update) => {
+const useMedia = (update, myFilesOnly = false) => {
   const [mediaArray, setMediaArray] = useState([]);
+  const {user} = useContext(MainContext);
   const loadMedia = async () => {
     try {
-      const json = await useTag().getFilesByTag(applicationTag);
-      // console.log(json);
+      let json = await useTag().getFilesByTag(applicationTag);
+      console.log(json);
+      if (myFilesOnly) {
+        json = json.filter((file) => file.user_id === user.user_id);
+      }
+      json.reverse();
       const allMediaData = json.map(async (mediaItem) => {
         return await doFetch(apiUrl + 'media/' + mediaItem.file_id);
       });
@@ -82,6 +88,7 @@ const useUser = () => {
   };
 
   const postUser = async (userData) => {
+    // console.log('creating user', userData);
     const options = {
       method: 'POST',
       headers: {
@@ -96,7 +103,9 @@ const useUser = () => {
     }
   };
 
-  return {checkUsername, getUserByToken, postUser};
+  const getUserById = () => {};
+
+  return {checkUsername, getUserByToken, postUser, getUserById};
 };
 
 const useTag = () => {
